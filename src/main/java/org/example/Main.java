@@ -1,17 +1,54 @@
 package org.example;
 
+import javafx.application.Application;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceDialog;
+import javafx.stage.Stage;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
-public class Main {
-    static void main() {
-        //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
-        // to see how IntelliJ IDEA suggests fixing it.
-        IO.println(String.format("Hello and welcome!"));
+public class Main extends Application {
 
-        for (int i = 1; i <= 5; i++) {
-            //TIP Press <shortcut actionId="Debug"/> to start debugging your code. We have set one <icon src="AllIcons.Debugger.Db_set_breakpoint"/> breakpoint
-            // for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.
-            IO.println("i = " + i);
+    @Override
+    public void start(Stage stage) throws Exception {
+        Button boton = new Button("Boton");
+        boton.setOnAction(e -> {
+            mostrarSeleccion();
+        });
+
+        Scene scene = new Scene(boton, 300, 250);
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    private void mostrarSeleccion() {
+        List<String> opciones = new ArrayList<>();
+        opciones.add("Opcion 1");
+        opciones.add("Opcion 2");
+        opciones.add("Opcion 3");
+        opciones.add("Opcion 4");
+
+        ChoiceDialog<String> dialogo = new ChoiceDialog<>("Opcion 1", opciones);
+        dialogo.setTitle("Seleccion de opcion");
+        dialogo.setHeaderText("Elija una opcion");
+        dialogo.setContentText("Opciones:");
+
+        Optional<String> resultado = dialogo.showAndWait();
+
+        if (resultado.isPresent()) {
+            String opcionSeleccionada = resultado.get();
+            System.out.println("Opcion elegida: " + opcionSeleccionada);
+        }else  {
+            System.out.println("No se ha seleccionado nada");
         }
+    }
+
+    public static void main(String[] args) {
+        launch(args);
     }
 }
